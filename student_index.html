@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>ОГЭ — Подготовка</title>
+  <style>
+    body{font-family:Inter,system-ui,Arial; background:#071027; color:#e6eef6; margin:0; padding:0;}
+    .wrap{max-width:1000px;margin:0 auto;padding:20px;}
+    header{padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.1);}
+    h1{margin:0;}
+    nav{margin:14px 0;display:flex;gap:10px;flex-wrap:wrap;}
+    button{
+      padding:12px 16px;
+      border-radius:12px;
+      border:0;
+      cursor:pointer;
+      font-weight:500;
+      font-size:14px;
+      transition: all 0.3s ease;
+      transform: translateY(0);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      position:relative;
+      overflow:hidden;
+    }
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    button:hover::before {
+      left: 100%;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .primary{
+      background: linear-gradient(135deg, #60a5fa, #3b82f6);
+      color:white;
+    }
+    .secondary{
+      background: rgba(255,255,255,0.1);
+      color:#e6eef6;
+      border:1px solid rgba(255,255,255,0.2);
+    }
+    .secondary.active{
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color:white;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+    .card{
+      background:rgba(255,255,255,0.03);
+      padding:20px;
+      border-radius:16px;
+      margin-top:16px;
+      border:1px solid rgba(255,255,255,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+    .tests-list{display:flex;flex-direction:column;gap:12px}
+    .test-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px;
+      border-radius:12px;
+      background:rgba(255,255,255,0.02);
+      border:1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+    }
+    .test-row:hover {
+      background: rgba(255,255,255,0.05);
+      transform: translateX(5px);
+    }
+    .options{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+    .option{
+      padding:14px;
+      border-radius:10px;
+      background:rgba(255,255,255,0.02);
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+    }
+    .option:hover {
+      background: rgba(255,255,255,0.05);
+      transform: translateX(3px);
+    }
+    .option[aria-pressed="true"]{
+      background: linear-gradient(135deg, rgba(96,165,250,0.2), rgba(59,130,246,0.3));
+      outline:2px solid rgba(96,165,250,0.5);
+      transform: scale(1.02);
+    }
+    footer{
+      text-align:center;
+      margin:30px 0 20px;
+      color:#9fbbe8;
+      font-size:14px;
+      opacity:0.8;
+      transition: opacity 0.3s ease;
+    }
+    footer:hover {
+      opacity: 1;
+    }
+    .countdown{
+      font-size:24px;
+      font-weight:bold;
+      margin-top:12px;
+      color:#60a5fa;
+      text-shadow: 0 2px 4px rgba(96,165,250,0.3);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.8; }
+      100% { opacity: 1; }
+    }
+    .news-item{
+      border-bottom:1px solid rgba(255,255,255,0.1);
+      padding:16px 0;
+      transition: all 0.3s ease;
+    }
+    .news-item:hover {
+      background: rgba(255,255,255,0.02);
+      padding-left: 8px;
+      padding-right: 8px;
+      border-radius: 8px;
+    }
+    .news-date{
+      color:#9fbbe8;
+      font-size:14px;
+      opacity:0.8;
+    }
+    .content-text{
+      white-space: pre-line;
+      line-height:1.6;
+      transition: all 0.3s ease;
+    }
+    .theory-content h1, .theory-content h2, .theory-content h3 {
+      color: #60a5fa;
+      margin-top: 24px;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 4px rgba(96,165,250,0.2);
+      transition: color 0.3s ease;
+    }
+    .theory-content h1:hover, .theory-content h2:hover, .theory-content h3:hover {
+      color: #93c5fd;
+    }
+    .theory-content p {
+      margin: 12px 0;
+      transition: all 0.3s ease;
+    }
+    .theory-content p:hover {
+      transform: translateX(3px);
+    }
+    .theory-content ul {
+      margin: 12px 0;
+      padding-left: 24px;
+      transition: all 0.3s ease;
+    }
+    .theory-content li {
+      margin: 8px 0;
+      padding: 4px 0;
+      transition: all 0.3s ease;
+    }
+    .theory-content li:hover {
+      background: rgba(255,255,255,0.03);
+      padding-left: 8px;
+      border-radius: 4px;
+    }
+
+    /* Анимация появления контента */
+    .content-slide {
+      animation: slideIn 0.5s ease-out;
+    }
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Анимация загрузки */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: #60a5fa;
+      animation: spin 1s ease-in-out infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1 style="background: linear-gradient(135deg, #60a5fa, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">ОГЭ — Подготовка по русскому языку</h1>
+      <p style="color:#9fbbe8; opacity: 0.9;">Сайт для подготовки к экзамену: теория, тесты и обратный отсчёт</p>
+    </header>
+
+    <nav>
+      <button id="tab-news" class="primary">📰 Новости</button>
+      <button id="tab-tests" class="secondary">📝 Тесты</button>
+      <button id="tab-theory" class="secondary">📘 Теория</button>
+      <button id="tab-timer" class="secondary">⏳ Таймер</button>
+      <button id="tab-about" class="secondary">👥 О нас</button>
+    </nav>
+
+    <div id="content"></div>
+
+    <footer>
+      © <span id="year"></span> Подготовка к ОГЭ. Сделано для учеников, чтобы было проще готовиться.
+    </footer>
+  </div>
+
+<script>
+  const API = "/api/tests";
+  const NEWS_API = "/api/news";
+  const CONTENT_API = "/api/content";
+  let DB = null;
+  let NEWS = null;
+  let CONTENT = null;
+  let state = { testId: null, idx:0, answers:{}, currentTab: 'news' };
+
+  // Функция для установки активной вкладки
+  function setActiveTab(tabId) {
+    // Убираем класс active со всех кнопок
+    document.querySelectorAll('nav button').forEach(btn => {
+      btn.classList.remove('active');
+      if (!btn.classList.contains('primary')) {
+        btn.classList.add('secondary');
+      }
+    });
+
+    // Добавляем класс active к выбранной кнопке
+    const activeBtn = document.getElementById(tabId);
+    activeBtn.classList.add('active');
+    activeBtn.classList.remove('secondary');
+
+    // Сохраняем текущую вкладку
+    state.currentTab = tabId.replace('tab-', '');
+  }
+
+  // Показываем индикатор загрузки
+  function showLoading() {
+    const c = document.getElementById('content');
+    c.innerHTML = '<div class="card" style="text-align: center;"><div class="loading"></div><p>Загрузка...</p></div>';
+    c.classList.add('content-slide');
+  }
+
+  async function load() {
+    showLoading();
+    try {
+      const [testsRes, newsRes, contentRes] = await Promise.all([
+        fetch(API),
+        fetch(NEWS_API),
+        fetch(CONTENT_API)
+      ]);
+      DB = await testsRes.json();
+      NEWS = await newsRes.json();
+      CONTENT = await contentRes.json();
+      renderNews();
+    } catch (e) {
+      document.getElementById('content').innerHTML = '<div class="card">Ошибка загрузки данных. Запустите сервер.</div>';
+    }
+  }
+
+  document.getElementById('tab-news').addEventListener('click', ()=>{
+    setActiveTab('tab-news');
+    showLoading();
+    setTimeout(() => renderNews(), 100);
+  });
+  document.getElementById('tab-tests').addEventListener('click', ()=>{
+    setActiveTab('tab-tests');
+    showLoading();
+    setTimeout(() => renderTests(), 100);
+  });
+  document.getElementById('tab-theory').addEventListener('click', ()=>{
+    setActiveTab('tab-theory');
+    showLoading();
+    setTimeout(() => renderTheory(), 100);
+  });
+  document.getElementById('tab-timer').addEventListener('click', ()=>{
+    setActiveTab('tab-timer');
+    showLoading();
+    setTimeout(() => renderTimer(), 100);
+  });
+  document.getElementById('tab-about').addEventListener('click', ()=>{
+    setActiveTab('tab-about');
+    showLoading();
+    setTimeout(() => renderAbout(), 100);
+  });
+
+  // Новости
+  function renderNews(){
+    const c = document.getElementById('content');
+    c.innerHTML = '';
+    const card=document.createElement('div');
+    card.className='card content-slide';
+    const h=document.createElement('h2');
+    h.textContent='📰 Последние новости';
+    h.style.color = '#60a5fa';
+    card.appendChild(h);
+
+    if (!NEWS || !NEWS.news || NEWS.news.length === 0) {
+      card.innerHTML += '<p>Новостей пока нет.</p>';
+    } else {
+      NEWS.news.forEach(newsItem=>{
+        const newsDiv=document.createElement('div');
+        newsDiv.className='news-item content-slide';
+        newsDiv.style.animationDelay = `${Math.random() * 0.2}s`;
+        newsDiv.innerHTML=`
+          <h3 style="color: #93c5fd; margin-bottom: 8px;">${newsItem.title}</h3>
+          <div class="news-date">${newsItem.date}</div>
+          <p class="content-text">${newsItem.content}</p>
+        `;
+        card.appendChild(newsDiv);
+      });
+    }
+    c.appendChild(card);
+  }
+
+  // Тесты
+  function renderTests(){
+    if (!DB) return;
+    const c = document.getElementById('content');
+    c.innerHTML = '';
+    const card=document.createElement('div');
+    card.className='card content-slide';
+    const list=document.createElement('div');
+    list.className='tests-list';
+
+    DB.tests.forEach((t, index)=>{
+      const row=document.createElement('div');
+      row.className='test-row content-slide';
+      row.style.animationDelay = `${index * 0.1}s`;
+      row.innerHTML=`<div><strong style="color: #93c5fd;">${t.title}</strong><div style="font-size:13px;color:#9fbbe8">${t.questions.length} вопросов</div></div>`;
+      const btn=document.createElement('button');
+      btn.textContent="Начать";
+      btn.className = 'primary';
+      btn.onclick=()=>startTest(t.id);
+      row.appendChild(btn);
+      list.appendChild(row);
+    });
+    card.appendChild(list);
+    c.appendChild(card);
+  }
+
+  // Теория
+  function renderTheory(){
+    const c=document.getElementById('content');
+    c.innerHTML='';
+    const card=document.createElement('div');
+    card.className='card content-slide';
+
+    if (CONTENT && CONTENT.theory) {
+      const h=document.createElement('h2');
+      h.textContent=CONTENT.theory.title || '📘 Теория';
+      h.style.color = '#60a5fa';
+      card.appendChild(h);
+
+      const content=document.createElement('div');
+      content.className='theory-content content-text';
+
+      // Простой парсер Markdown
+      let theoryText = CONTENT.theory.content || '';
+
+      // Заменяем заголовки
+      theoryText = theoryText.replace(/^# (.*$)/gim, '<h3 style="color: #60a5fa;">$1</h3>');
+      theoryText = theoryText.replace(/^## (.*$)/gim, '<h4 style="color: #93c5fd;">$1</h4>');
+      theoryText = theoryText.replace(/^### (.*$)/gim, '<h5 style="color: #bfdbfe;">$1</h5>');
+
+      // Заменяем списки
+      theoryText = theoryText.replace(/^- (.*$)/gim, '<li>$1</li>');
+      theoryText = theoryText.replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>');
+
+      // Заменяем переносы строк
+      theoryText = theoryText.replace(/\n\n/g, '</p><p>');
+      theoryText = theoryText.replace(/\n/g, '<br>');
+
+      content.innerHTML = theoryText;
+      card.appendChild(content);
+    } else {
+      card.innerHTML = '<h2 style="color: #60a5fa;">📘 Теория</h2><p>Теоретические материалы пока не добавлены.</p>';
+    }
+    c.appendChild(card);
+  }
+
+  // Таймер
+  function renderTimer(){
+    const examDate=new Date("2026-05-28T10:00:00+03:00");
+    const c=document.getElementById('content');
+    c.innerHTML='';
+    const card=document.createElement('div');
+    card.className='card content-slide';
+    card.innerHTML="<h2 style='color: #60a5fa;'>⏳ До начала ОГЭ осталось:</h2><div id='countdown' class='countdown'></div>";
+    c.appendChild(card);
+
+    function tick(){
+      const now=new Date();
+      const diff=examDate-now;
+      if(diff<=0){
+        document.getElementById('countdown').textContent="Экзамен уже начался!";
+        clearInterval(timer);
+        return;
+      }
+      const d=Math.floor(diff/(1000*60*60*24));
+      const h=Math.floor((diff/(1000*60*60))%24);
+      const m=Math.floor((diff/(1000*60))%60);
+      const s=Math.floor((diff/1000)%60);
+      document.getElementById('countdown').textContent=`${d} дн ${h} ч ${m} мин ${s} сек`;
+    }
+    tick();
+    const timer=setInterval(tick,1000);
+  }
+
+  // О нас
+  function renderAbout(){
+    const c=document.getElementById('content');
+    c.innerHTML='';
+    const card=document.createElement('div');
+    card.className='card content-slide';
+
+    if (CONTENT && CONTENT.about) {
+      const h=document.createElement('h2');
+      h.textContent=CONTENT.about.title || '👥 О нас';
+      h.style.color = '#60a5fa';
+      card.appendChild(h);
+
+      const content=document.createElement('div');
+      content.className='content-text';
+      content.textContent=CONTENT.about.content || 'Информация о проекте.';
+      card.appendChild(content);
+    } else {
+      card.innerHTML=`<h2 style="color: #60a5fa;">👥 О нас</h2>
+        <p>Этот сайт создан для школьников, которые готовятся к ОГЭ по русскому языку.</p>
+        <p>Мы собрали теорию, тесты и сделали удобный интерфейс с таймером до экзамена.</p>
+        <p>Разработчик: Владислав. Цель — чтобы подготовка была понятной и доступной.</p>`;
+    }
+    c.appendChild(card);
+  }
+
+  // Тест
+  function startTest(id){
+    const t=DB.tests.find(x=>x.id===id);
+    state.testId=id;
+    state.idx=0;
+    state.answers={};
+    renderTestView(t);
+  }
+
+  function renderTestView(t){
+    const c=document.getElementById('content');
+    c.innerHTML='';
+    const card=document.createElement('div');
+    card.className='card content-slide';
+    const q=t.questions[state.idx];
+    card.innerHTML=`<h2 style="color: #93c5fd;">${t.title}</h2><p><strong>Вопрос ${state.idx+1}:</strong> ${q.text}</p>`;
+    const opts=document.createElement('div');
+    opts.className='options';
+
+    q.options.forEach((opt,i)=>{
+      const o=document.createElement('div');
+      o.className='option content-slide';
+      o.style.animationDelay = `${i * 0.1}s`;
+      o.textContent=opt;
+      o.setAttribute('aria-pressed',state.answers[q.id]===i?'true':'false');
+      o.onclick=()=>{
+        state.answers[q.id]=i;
+        renderTestView(t);
+      };
+      opts.appendChild(o);
+    });
+    card.appendChild(opts);
+    const nav=document.createElement('div');
+    nav.style.marginTop='16px';
+    nav.style.display='flex';
+    nav.style.gap='10px';
+
+    const prev=document.createElement('button');
+    prev.textContent='Назад';
+    prev.className = 'secondary';
+    prev.onclick=()=>{
+      if(state.idx>0){
+        state.idx--;
+        renderTestView(t);
+      }
+    };
+
+    const next=document.createElement('button');
+    next.textContent=(state.idx<t.questions.length-1)?'Далее':'Завершить';
+    next.className = 'primary';
+    next.onclick=()=>{
+      if(state.idx<t.questions.length-1){
+        state.idx++;
+        renderTestView(t);
+      } else {
+        showSummary(t);
+      }
+    };
+
+    nav.appendChild(prev);
+    nav.appendChild(next);
+    card.appendChild(nav);
+    c.appendChild(card);
+
+    if(typeof state.answers[q.id]==='number'){
+      const isOk=state.answers[q.id]===q.correct;
+      const p=document.createElement('p');
+      p.style.marginTop='12px';
+      p.style.color = isOk ? '#4ade80' : '#f87171';
+      p.style.fontWeight = 'bold';
+      p.textContent=isOk?'Правильно ✅':'Неверно ✖';
+      card.appendChild(p);
+
+      if(q.explanation){
+        const e=document.createElement('p');
+        e.style.fontSize='14px';
+        e.style.color='#9fbbe8';
+        e.style.marginTop='8px';
+        e.textContent=q.explanation;
+        card.appendChild(e);
+      }
+    }
+  }
+
+  function showSummary(t){
+    const c=document.getElementById('content');
+    c.innerHTML='';
+    const card=document.createElement('div');
+    card.className='card content-slide';
+    let score=0;
+    const list=document.createElement('ol');
+
+    t.questions.forEach((q, index)=>{
+      const a=state.answers[q.id];
+      const ok=a===q.correct;
+      if(ok) score++;
+      const li=document.createElement('li');
+      li.className = 'content-slide';
+      li.style.animationDelay = `${index * 0.1}s`;
+      li.style.marginBottom = '12px';
+      li.style.padding = '8px';
+      li.style.borderRadius = '6px';
+      li.style.background = ok ? 'rgba(74, 222, 128, 0.1)' : 'rgba(248, 113, 113, 0.1)';
+      li.style.borderLeft = `4px solid ${ok ? '#4ade80' : '#f87171'}`;
+      li.innerHTML=`
+        <div style="margin-bottom: 4px;">${q.text}</div>
+        <div style="font-size: 14px; color: ${ok ? '#4ade80' : '#f87171'}">
+          Ваш ответ: ${a!==undefined?q.options[a]:'—'} ${ok?'✔':'✖'}
+        </div>
+        <div style="font-size: 13px; color: #9fbbe8;">
+          Правильно: ${q.options[q.correct]}
+        </div>
+      `;
+      list.appendChild(li);
+    });
+
+    const percentage = Math.round((score / t.questions.length) * 100);
+    let resultColor = '#f87171';
+    if (percentage >= 80) resultColor = '#4ade80';
+    else if (percentage >= 60) resultColor = '#fbbf24';
+
+    card.innerHTML=`
+      <h2 style="color: #93c5fd;">${t.title} — результат</h2>
+      <div style="text-align: center; margin: 20px 0;">
+        <div style="font-size: 48px; font-weight: bold; color: ${resultColor};">
+          ${score}/${t.questions.length}
+        </div>
+        <div style="font-size: 20px; color: ${resultColor};">
+          ${percentage}%
+        </div>
+      </div>
+    `;
+    card.appendChild(list);
+
+    const back=document.createElement('button');
+    back.textContent='Вернуться к тестам';
+    back.className = 'primary';
+    back.style.marginTop = '20px';
+    back.onclick=()=>renderTests();
+    card.appendChild(back);
+    c.appendChild(card);
+  }
+
+  // Инициализация
+  document.getElementById('year').textContent=new Date().getFullYear();
+
+  // Устанавливаем активную вкладку при загрузке
+  setTimeout(() => {
+    setActiveTab('tab-news');
+    load();
+  }, 100);
+</script>
+</body>
+</html>

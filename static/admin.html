@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Админка тестов — ОГЭ</title>
+  <style>
+    body{font-family:Inter,Arial;margin:18px;background:#f8f9fa;}
+    textarea{width:100%;height:180px;font-family:monospace;border:1px solid #ddd;border-radius:6px;padding:8px;transition: all 0.3s ease;}
+    textarea:focus {outline:none;border-color:#007bff;box-shadow:0 0 0 3px rgba(0,123,255,0.1);}
+    .row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+    .tests{max-width:900px}
+    .test-item{
+      padding:16px;
+      border:1px solid #ddd;
+      margin-top:12px;
+      border-radius:8px;
+      background:white;
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    .test-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .news-item{
+      padding:16px;
+      border:1px solid #ddd;
+      margin-top:12px;
+      border-radius:8px;
+      background:white;
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    .news-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .content-item{
+      padding:16px;
+      border:1px solid #ddd;
+      margin-top:12px;
+      border-radius:8px;
+      background:white;
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    .content-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    button{
+      padding:10px 16px;
+      border-radius:8px;
+      border:1px solid #007bff;
+      background:#007bff;
+      color:white;
+      cursor:pointer;
+      font-weight:500;
+      transition: all 0.3s ease;
+      transform: translateY(0);
+    }
+    button:hover {
+      background:#0056b3;
+      border-color:#0056b3;
+      transform: translateY(-1px);
+      box-shadow:0 2px 8px rgba(0,123,255,0.3);
+    }
+    button:active {
+      transform: translateY(1px);
+    }
+    .tab{
+      background:#e9ecef;
+      padding:12px 20px;
+      cursor:pointer;
+      border-radius:8px;
+      border:none;
+      font-weight:500;
+      transition: all 0.3s ease;
+    }
+    .tab:hover {
+      background:#dee2e6;
+    }
+    .tab.active{
+      background:#007bff;
+      color:white;
+      box-shadow:0 2px 8px rgba(0,123,255,0.3);
+    }
+    .tab-content{display:none;margin-top:16px;animation: fadeIn 0.3s ease;}
+    .tab-content.active{display:block}
+    .content-textarea{
+      width:100%;
+      height:300px;
+      font-family:monospace;
+      border:1px solid #ddd;
+      border-radius:6px;
+      padding:12px;
+      transition: all 0.3s ease;
+    }
+    .content-textarea:focus {
+      outline:none;
+      border-color:#007bff;
+      box-shadow:0 0 0 3px rgba(0,123,255,0.1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #495057;
+    }
+  </style>
+</head>
+<body>
+  <h1>Админ-панель тестов и контента</h1>
+
+  <div class="tabs" style="display:flex;gap:8px;margin-bottom:20px">
+    <div class="tab active" data-tab="tests">📝 Тесты</div>
+    <div class="tab" data-tab="news">📰 Новости</div>
+    <div class="tab" data-tab="content">📘 Контент</div>
+  </div>
+
+  <div id="tab-tests" class="tab-content active">
+    <div style="margin-bottom:16px;">
+      <button id="btn-refresh">🔄 Обновить</button>
+      <button id="btn-add">➕ Добавить тест</button>
+    </div>
+    <div id="tests" class="tests"></div>
+  </div>
+
+  <div id="tab-news" class="tab-content">
+    <div style="margin-bottom:16px;">
+      <button id="btn-refresh-news">🔄 Обновить новости</button>
+      <button id="btn-add-news">➕ Добавить новость</button>
+    </div>
+    <div id="news" class="tests"></div>
+  </div>
+
+  <div id="tab-content" class="tab-content">
+    <div style="margin-bottom:16px;">
+      <button id="btn-refresh-content">🔄 Обновить контент</button>
+    </div>
+    <div id="content-panel" class="tests"></div>
+  </div>
+
+  <script src="/static/admin.js"></script>
+</body>
+</html>
